@@ -13,6 +13,10 @@ const routes: Routes = [
     loadChildren: () => import('./modules/home/home.module').then(m => m.HomeModule)
   },
   {
+    path: 'signalR',
+    loadChildren: () => import('./modules/signalR/signalR.module').then(m => m.SignalRModule)
+  },
+  {
     path: 'admin',
     loadChildren: () => import('./modules/administration/administration.module').then(m => m.AdministrationModule)
   },

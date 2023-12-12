@@ -135,4 +135,33 @@ export class ApiService {
     return this.http.post<any>('Auth/GetAvailableClaimsForRole', body, this.httpOptions);
   }
   //</roles>
+  //<signalR>
+  sendMessageToBroadcast(message: any) {
+    let body = {
+      message: message
+    };
+    return this.http.post<any>('SignalR/SendMessageToBroadcast', body, this.httpOptions);
+  }
+  sendMessageToConnection(connectionId: string, message: any) {
+    let body = {
+      connectionId: connectionId,
+      message: message
+    };
+    return this.http.post<any>('SignalR/SendMessageToConnection', body, this.httpOptions);
+  }
+  sendMessageToClient(clientId: string, message: any) {
+    let body = {
+      clientId: clientId,
+      message: message
+    };
+    return this.http.post<any>('SignalR/SendMessageToClient', body, this.httpOptions);
+  }
+  sendMessageToUser(userId: string, message: any) {
+    let body = {
+      userId: userId,
+      message: message
+    };
+    return this.http.post<any>('SignalR/SendMessageToUser', body, this.httpOptions);
+  }
+  //</signalR>
 }

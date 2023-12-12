@@ -21,6 +21,11 @@ namespace be.Common
                 public static class Types
                 {
                     public const string CANDOANYTHING = "CANDOANYTHING";
+                    public const string CanRegisterToSignalR = "CanRegisterToSignalR";
+                    public const string CanSendSignalRMessageToBroadcast = "CanSendSignalRMessageToBroadcast";
+                    public const string CanSendSignalRMessageToClient = "CanSendSignalRMessageToClient";
+                    public const string CanSendSignalRMessageToConnection = "CanSendSignalRMessageToConnection";
+                    public const string CanSendSignalRMessageToUser = "CanSendSignalRMessageToUser";
                 }
                 public static class Values
                 {

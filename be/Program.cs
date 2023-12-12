@@ -4,9 +4,9 @@ using be.DB.Contexts;
 using be.DB.Entities.AuthEntities;
 using be.DB.InitialScripts;
 using be.DB.Interceptors;
+using be.Hubs;
 using be.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -15,10 +15,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.IdentityModel.Tokens;
 using Serilog;
 using System;
-using System.Text;
 using System.Threading.Tasks;
 using static be.Auth.AuthPolicyManager;
 
@@ -126,6 +124,7 @@ namespace be
             //DBContextDump.InitialDump(services.BuildServiceProvider());
 
             builder.Services.AddScoped<AuthService>();
+            builder.Services.AddScoped<SignalRService>();
             builder.Services.AddCors(o => o.AddPolicy("Cors", builder =>
             {
                 builder.AllowAnyHeader()
@@ -134,6 +133,7 @@ namespace be
                 .AllowCredentials();
             }));
 
+            builder.Services.AddSignalR();
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
@@ -167,6 +167,8 @@ namespace be
             app.UseMiddleware<AuthMiddleware>();
 
             app.MapControllers();
+
+            app.MapHub<SignalRHub>("api/signalRHub");
 
             app.Run();
         }
