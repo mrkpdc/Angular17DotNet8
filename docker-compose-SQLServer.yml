@@ -1,30 +1,30 @@
 version: '3.4'
 
 services:
-  #angular17_net8_jwt_tests_sqlserver:
-  #  image: angular17_net8_jwt_tests_sqlserver
-  #  container_name: angular17_net8_jwt_tests_sqlserver
+  #angular17_net8_jwt_sqlserver:
+  #  image: angular17_net8_jwt_sqlserver
+  #  container_name: angular17_net8_jwt_sqlserver
   #  build: 
   #    context: ./database/SQLServer
   #    dockerfile: ./Dockerfile
   #  volumes:
-  #    - angular17_net8_jwt_tests_sqlserver_data:/var/opt/mssql
+  #    - angular17_net8_jwt_sqlserver_data:/var/opt/mssql
   #  ports:
   #    - 1433:1433
-  angular17_net8_jwt_tests_sqlserver:
-    image: angular17_net8_jwt_tests_sqlserver
-    container_name: angular17_net8_jwt_tests_sqlserver
+  angular17_net8_jwt_sqlserver:
+    image: angular17_net8_jwt_sqlserver
+    container_name: angular17_net8_jwt_sqlserver
     build: 
       context: ./database/SQLServer_NoScripts
       dockerfile: ./Dockerfile
     volumes:
-      - angular17_net8_jwt_tests_sqlserver_data:/var/opt/mssql
+      - angular17_net8_jwt_sqlserver_data:/var/opt/mssql
     ports:
       - 1433:1433
 
-  angular17_net8_jwt_tests_be:
-    image: angular17_net8_jwt_tests_be
-    container_name: angular17_net8_jwt_tests_be
+  angular17_net8_jwt_be:
+    image: angular17_net8_jwt_be
+    container_name: angular17_net8_jwt_be
     build:
       context: ./be
       dockerfile: ./Dockerfile
@@ -38,23 +38,23 @@ services:
       - Serilog__WriteTo__1__Args__outputTemplate={Timestamp} {Message}{NewLine:1}{Exception:1}
       - Serilog__WriteTo__1__Args__rollingInterval=Day
       - Serilog__WriteTo__2__Name=MSSqlServer
-      - Serilog__WriteTo__2__Args__connectionString=Server=angular17_net8_jwt_tests_sqlserver;Database=AuthDB;User id=sa;Password=Password01!;TrustServerCertificate=True
+      - Serilog__WriteTo__2__Args__connectionString=Server=angular17_net8_jwt_sqlserver;Database=AuthDB;User id=sa;Password=Password01!;TrustServerCertificate=True
       - Serilog__WriteTo__2__Args__tableName=Logs
       - Serilog__WriteTo__2__Args__AutoCreateSqlTable=True     
-      - ConnectionStrings__AuthDB_SQLServer=Server=angular17_net8_jwt_tests_sqlserver;Database=AuthDB;User id=sa;Password=Password01!;TrustServerCertificate=True;
+      - ConnectionStrings__AuthDB_SQLServer=Server=angular17_net8_jwt_sqlserver;Database=AuthDB;User id=sa;Password=Password01!;TrustServerCertificate=True;
     links:
-      - angular17_net8_jwt_tests_sqlserver
+      - angular17_net8_jwt_sqlserver
 
-  angular17_net8_jwt_tests_fe:
-    image: angular17_net8_jwt_tests_fe
-    container_name: angular17_net8_jwt_tests_fe
+  angular17_net8_jwt_fe:
+    image: angular17_net8_jwt_fe
+    container_name: angular17_net8_jwt_fe
     build:
       context: ./fe
       dockerfile: ./Dockerfile
     ports: 
       - 4200:80
     links:
-      - angular17_net8_jwt_tests_be
+      - angular17_net8_jwt_be
 
 volumes:
-  angular17_net8_jwt_tests_sqlserver_data:
+  angular17_net8_jwt_sqlserver_data:
