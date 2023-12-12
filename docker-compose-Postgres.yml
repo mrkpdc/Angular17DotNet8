@@ -1,5 +1,5 @@
 version: '3.4'
-
+name: angular17_net8
 services:
   angular17_net8_postgres:
     image: "postgres:16.1-alpine3.18"
