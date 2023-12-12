@@ -14,7 +14,7 @@ namespace be.Hubs
         public class ConnectedClient
         {
             public Guid ClientId { get; set; }
-            /*questo UserID viene preso dal context tramite il cookie autenticativo,
+            /*questo UserID viene preso dal context tramite il token autenticativo,
              ovviamente non inviato esplicitamente dal client :)*/
             public string? UserID { get; set; }
             public string CurrentConnectionId { get; set; } = string.Empty;
