@@ -65,7 +65,14 @@ export class AppComponent {
   }
 
   logout() {
-    this.authService.logOut();
+    this.pageIsLoading = true;
+    this.authService.logOut().then(result => {
+      //this.router.navigate(['home']);
+      this.pageIsLoading = false;
+    }).catch((error) => {
+      this.logger.error(error);
+      this.pageIsLoading = false;
+    });
   }
 
   checkClaim(claim) {

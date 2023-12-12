@@ -1,11 +1,5 @@
 @be_HostAddress = http://localhost:5179
 
-GET {{be_HostAddress}}/api/Values/GetValues
-Accept: application/json
-Authorization: Bearer eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2Q0JDLUhTNTEyIiwidHlwIjoiSldUIiwiY3R5IjoiSldUIn0..EdeuIp15doEHQyK0V6aSeQ.nXt6Muuiv5l2d6Ix3nbzxuHdl49YDOuqelvyj7PdqBXvgp3CYgSRyH80qp5PSStyInKZZ0OIKJuiQxjZ52KDU3ThqkAmGG6RCWmSh07KTvPoYdTrDrhyOUncOjtv7irR1-7g85YPt4fpotRnbMpiwzE1OS6UP4LNFP--SoKoO2qX4DzX9gXpahH3XbLFDtIIk41M-ZTaDgs7NO2ThwH4hRfTumKGMlbvSKtlEh5V8evVjapVv2r8zICpgxdKxR4GUpT831TNzQElsV4UAxmslccg1m_eSmDveaHwgguAJHXq9YjnZD3R3AkykXEzdeE3G-s9B2PDqZMVzYeykBERgB29waO2mi-L56aOp4sKxYKqhqRZ9tLasRbZJNRxo9ppvWZsw5phYXpbf4bydM2ygjLb6KCJrglBfDgcOKYgoxsdIlT8F4ynCOte6Jef8idP1CKYC3INeramfQ6qYynxmr_XfjRkQZNPeAPTIopg8VL-v69uaU80anzQnHyVu95Dk0XbOx2aYQG211N4x5IG14QpJ5dnwl6Vf0ibfwtAJwvenXmj561nUVBEKYJwZtyv_IxGHBMge3h5BEe-f-9vSk2QOXInhUjHohML2Lwg9958Sn7eC9-rBdFzy0bKLg4hpqymuuZNu8VoPgzPcRRlifEAeTiBa6fJ7bLtWsDqiBI.g4cJPci8EMReCvxfQX1GPbu1bg7XdDDY8rLs207u4_g
-
-###
-
 GET {{be_HostAddress}}/api/Values/1
 Accept: application/json
 
@@ -17,19 +11,7 @@ Content-Type: application/json
 
 {
 	"username": "admin",
-	"password": "Password01!",
-	"refreshToken": ""
-}
-
-###
-
-POST {{be_HostAddress}}/api/auth/Login
-Content-Type: application/json
-
-{
-	"username": "admin",
-	"password": "Password01!",
-	"refreshToken": ""
+	"password": "Password01!"
 }
 
 ###

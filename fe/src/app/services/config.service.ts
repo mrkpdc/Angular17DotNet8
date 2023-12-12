@@ -3,8 +3,6 @@ import { HttpClient } from '@angular/common/http';
 
 export interface Configs {
   backendUrl: string;
-  loginFragment: string;
-  refreshTokensFragment: string;
 }
 
 @Injectable({
@@ -21,9 +19,7 @@ export class ConfigService {
       .subscribe((data => {
         this.config =
         {
-          backendUrl: data['backendUrl'],
-          loginFragment: data['loginFragment'],
-          refreshTokensFragment: data['refreshTokensFragment']
+          backendUrl: data['backendUrl']
         }
       }));
   }
@@ -34,13 +30,5 @@ export class ConfigService {
 
   getBackendUrl() {
     return this.config.backendUrl;
-  }
-
-  getLoginFragment() {
-    return this.config.loginFragment;
-  }
-
-  getRefreshTokensFragment() {
-    return this.config.refreshTokensFragment;
   }
 }

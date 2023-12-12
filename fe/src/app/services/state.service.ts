@@ -23,30 +23,6 @@ export class StateService {
     else
       localStorage.removeItem('Claims');
   }
-  getJWTToken() {
-    let JWTToken = localStorage.getItem('JWTToken');
-    if (JWTToken != null)
-      return JWTToken;
-    return '';
-  }
-  setJWTToken(JWTToken: string) {
-    if (JWTToken)
-      localStorage.setItem('JWTToken', JWTToken);
-    else
-      localStorage.removeItem('JWTToken');
-  }
-  getJWTRefreshToken() {
-    let JWTRefreshToken = localStorage.getItem('JWTRefreshToken');
-    if (JWTRefreshToken != null)
-      return JWTRefreshToken;
-    return '';
-  }
-  setJWTRefreshToken(JWTRefreshToken: string) {
-    if (JWTRefreshToken)
-      localStorage.setItem('JWTRefreshToken', JWTRefreshToken);
-    else
-      localStorage.removeItem('JWTRefreshToken');
-  }
   getUser() {
     let user = localStorage.getItem('User');
     if (user != null) {

@@ -21,16 +21,14 @@ namespace be.Auth
         {
             if (httpContext.User.Identity.IsAuthenticated)
             {
-                /*questo verifica ad ogni chiamata che il token sia sempre all'ultima versione, di modo che se nel frattempo
+                /*questo verifica ad ogni chiamata che il cookie sia sempre all'ultima versione, di modo che se nel frattempo
                 i permessi dell'utente sono cambiati l'utente viene sloggato*/
                 var res = await signInManager.ValidateSecurityStampAsync(httpContext.User);
                 if (res == null)
                 {
-
-                    //await signInManager.SignOutAsync();
+                    await signInManager.SignOutAsync();
                     httpContext.Response.StatusCode = StatusCodes.Status401Unauthorized;
                     return;
-
                 }
                 await next(httpContext);
                 return;

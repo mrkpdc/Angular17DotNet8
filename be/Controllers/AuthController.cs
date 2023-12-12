@@ -29,39 +29,10 @@ namespace be.Controllers
             try
             {
                 var result = await authService.Login(model.Username, model.Password);
-                Response.StatusCode = (int)result.StatusCodeResult.StatusCode;
+                Response.StatusCode = (int)result.StatusCode;
                 var toSender = new
                 {
-                    Token = result.LoginResult?.Token,
-                    RefreshToken = result.LoginResult?.RefreshToken,
-                    Claims = result.LoginResult?.Claims
-                };
-                return toSender;
-            }
-            catch (Exception ex)
-            {
-                this.logger.Log(LogLevel.Error, ex, string.Empty);
-                Response.StatusCode = (int)ConstantValues.ServicesHttpResponses.InternalServerError.StatusCode;
-                return new
-                {
-                    result = ConstantValues.ServicesHttpResponses.InternalServerError.Result
-                };
-            }
-        }
-        [Authorize]
-        [HttpPost("RefreshTokens")]
-        public async Task<object> RefreshTokens([FromBody] LoginModel model,
-            [FromServices] AuthService authService)
-        {
-            try
-            {
-                var result = await authService.RefreshJWTTokens(model.RefreshToken);
-                Response.StatusCode = (int)result.StatusCodeResult.StatusCode;
-                var toSender = new
-                {
-                    Token = result.LoginResult.Token,
-                    RefreshToken = result.LoginResult.RefreshToken,
-                    Claims = result.LoginResult.Claims
+                    Claims = result.Result
                 };
                 return toSender;
             }
