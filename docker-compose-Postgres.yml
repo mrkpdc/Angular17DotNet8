@@ -97,7 +97,11 @@ services:
 
 volumes:
   angular17_net8_postgres_data:
+    name: angular17_net8_postgres_data
+    driver: local
   angular17_net8_prometheus_data:
-    #driver: local
+    name: angular17_net8_prometheus_data
+    driver: local
   angular17_net8_grafana_data:
-    #driver: local
+    name: angular17_net8_grafana_data
+    driver: local
