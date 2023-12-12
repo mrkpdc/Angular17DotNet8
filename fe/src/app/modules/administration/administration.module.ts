@@ -4,7 +4,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthGuard } from '@services/auth.guard';
-import { NgZorroImportsModule } from '../.././ngZorroImports.module';
+import { NgZorroImportsModule } from '../../ngZorroImports.module';
 import { UsersComponent } from './pages/users/users.component';
 import { RolesComponent } from './pages/roles/roles.component';
 
