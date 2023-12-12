@@ -5,7 +5,7 @@ services:
   #  image: angular17_net8_jwt_sqlserver
   #  container_name: angular17_net8_jwt_sqlserver
   #  build: 
-  #    context: ./var/database/SQLServer
+  #    context: ./var/database/sql_server
   #    dockerfile: ./Dockerfile
   #  volumes:
   #    - angular17_net8_jwt_sqlserver_data:/var/opt/mssql
@@ -15,7 +15,7 @@ services:
     image: angular17_net8_jwt_sqlserver
     container_name: angular17_net8_jwt_sqlserver
     build: 
-      context: ./var/database/SQLServer_NoScripts
+      context: ./var/database/sql_server_no_scripts
       dockerfile: ./Dockerfile
     volumes:
       - angular17_net8_jwt_sqlserver_data:/var/opt/mssql
