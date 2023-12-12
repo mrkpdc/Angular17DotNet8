@@ -9,6 +9,7 @@ export class StateService {
   private Config: BehaviorSubject<any> = new BehaviorSubject({});
   private Language: BehaviorSubject<any> = new BehaviorSubject({});
   private Claims: [] = [];
+  private CachedSignalRConnectionId: string = '';
 
   getClaims() {
     let claims = localStorage.getItem('Claims');
@@ -22,6 +23,19 @@ export class StateService {
       localStorage.setItem('Claims', JSON.stringify(claims));
     else
       localStorage.removeItem('Claims');
+  }
+  getCachedSignalRConnectionId() {
+    let CachedSignalRConnectionId = localStorage.getItem('CSRC');
+    if (CachedSignalRConnectionId != null)
+      return JSON.parse(CachedSignalRConnectionId);
+    return '';
+  }
+  setCachedSignalRConnectionId(connectionId: string) {
+    this.CachedSignalRConnectionId = connectionId;
+    if (connectionId)
+      localStorage.setItem('CSRC', JSON.stringify(connectionId));
+    else
+      localStorage.removeItem('CSRC');
   }
   getJWTToken() {
     let JWTToken = localStorage.getItem('JWTToken');
