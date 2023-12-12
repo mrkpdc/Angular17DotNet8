@@ -56,5 +56,56 @@ services:
     links:
       - angular17_net8_jwt_be
 
+  angular17_net8_jwt_prometheus:
+    image: prom/prometheus:v2.48.0
+    container_name: angular17_net8_jwt_prometheus
+    #ports:
+    #  - 9090:9090
+    command: "--config.file=/etc/prometheus/prometheus.yml"
+    volumes:
+      - ./var/monitoring/prometheus/prometheus-config.yml:/etc/prometheus/prometheus.yml:ro
+      - angular17_net8_jwt_prometheus_data:/prometheus
+    #restart: unless-stopped
+
+  #questo è per le risorse dei containers in linux
+  angular17_net8_jwt_cadvisor:
+    image: gcr.io/cadvisor/cadvisor:v0.47.0     
+    container_name: angular17_net8_jwt_cadvisor
+    #ports:
+    #  - 8080:8080
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+      - /dev/disk/:/dev/disk:ro
+    devices:
+      - /dev/kmsg
+    privileged: true
+    #restart: unless-stopped
+
+  #questo è per le risorse di sistema in linux
+  angular17_net8_jwt_node_exporter:
+   image: quay.io/prometheus/node-exporter:v1.5.0
+   container_name: angular17_net8_jwt_node_exporter
+   command: "--path.rootfs=/host"
+   pid: host
+   #restart: unless-stopped
+   volumes:
+     - /:/host:ro,rslave
+
+  angular17_net8_jwt_grafana:
+    image: grafana/grafana-oss:10.2.2
+    container_name: angular17_net8_jwt_grafana
+    ports:
+      - "3000:3000"
+    volumes:
+      - angular17_net8_jwt_grafana_data:/var/lib/grafana
+    #restart: unless-stopped
+
 volumes:
   angular17_net8_jwt_sqlserver_data:
+  angular17_net8_jwt_prometheus_data:
+    #driver: local
+  angular17_net8_jwt_grafana_data:
+    #driver: local  
