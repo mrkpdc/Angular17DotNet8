@@ -6,7 +6,7 @@ services:
     container_name: angular17_net8_cookie_postgres
     volumes:
       - angular17_net8_cookie_postgres_data:/var/lib/postgresql/data
-      - ./var/database/Postgres/AuthDB_Postgres.sql:/docker-entrypoint-initdb.d/AuthDB_Postgres.sql
+      - ./var/database/postgres/AuthDB_Postgres.sql:/docker-entrypoint-initdb.d/AuthDB_Postgres.sql
     ports:
       - 5432:5432
     environment:
