@@ -6,7 +6,6 @@ using be.DB.InitialScripts;
 using be.DB.Interceptors;
 using be.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -15,10 +14,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.IdentityModel.Tokens;
 using Serilog;
 using System;
-using System.Text;
 using System.Threading.Tasks;
 using static be.Auth.AuthPolicyManager;
 
