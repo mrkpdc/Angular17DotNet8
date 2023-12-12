@@ -1,0 +1,103 @@
+version: '3.4'
+
+services:
+  angular17_net8_jwt_tests_postgres:
+    image: "postgres:16.1-alpine3.18"
+    container_name: angular17_net8_jwt_tests_postgres
+    volumes:
+      - angular17_net8_jwt_tests_postgres_data:/var/lib/postgresql/data
+      - ./database/Postgres/AuthDB_Postgres.sql:/docker-entrypoint-initdb.d/AuthDB_Postgres.sql
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_DB=AuthDB
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+
+  angular17_net8_jwt_tests_be:
+    image: angular17_net8_jwt_tests_be
+    container_name: angular17_net8_jwt_tests_be
+    build:
+      context: ./be
+      dockerfile: ./Dockerfile
+    ports:
+      - 5179:8080
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - Serilog__WriteTo__0__Name=Console
+      - Serilog__WriteTo__1__Name=File
+      - Serilog__WriteTo__1__Args__path=Logs\\Logs.txt
+      - Serilog__WriteTo__1__Args__outputTemplate={Timestamp} {Message}{NewLine:1}{Exception:1}
+      - Serilog__WriteTo__1__Args__rollingInterval=Day
+      - Serilog__WriteTo__2__Name=PostgreSQL
+      - Serilog__WriteTo__2__Args__connectionString=Server=angular17_net8_jwt_tests_postgres;Port=5432;Database=AuthDB;UserId=postgres;Password=postgres;
+      - Serilog__WriteTo__2__Args__tableName=Logs
+      - Serilog__WriteTo__2__Args__AutoCreateSqlTable=True      
+      - ConnectionStrings__AuthDB_Postgres=Server=angular17_net8_jwt_tests_postgres;Port=5432;Database=AuthDB;UserId=postgres;Password=postgres;
+    links:
+      - angular17_net8_jwt_tests_postgres
+
+  angular17_net8_jwt_tests_fe:
+    image: angular17_net8_jwt_tests_fe
+    container_name: angular17_net8_jwt_tests_fe
+    build:
+      context: ./fe
+      dockerfile: ./Dockerfile
+    ports: 
+      - 4200:80
+    links:
+      - angular17_net8_jwt_tests_be
+
+  angular17_net8_jwt_tests_prometheus:
+    image: prom/prometheus:v2.48.0
+    container_name: angular17_net8_jwt_tests_prometheus
+    #ports:
+    #  - 9090:9090
+    command: "--config.file=/etc/prometheus/prometheus.yml"
+    volumes:
+      - ./monitoring/prometheus/prometheus-config.yml:/etc/prometheus/prometheus.yml:ro
+      - angular17_net8_jwt_tests_prometheus_data:/prometheus
+    #restart: unless-stopped
+
+  #questo è per le risorse dei containers in linux
+  angular17_net8_jwt_tests_cadvisor:
+    image: gcr.io/cadvisor/cadvisor:v0.47.0     
+    container_name: angular17_net8_jwt_tests_cadvisor
+    #ports:
+    #  - 8080:8080
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+      - /dev/disk/:/dev/disk:ro
+    devices:
+      - /dev/kmsg
+    privileged: true
+    #restart: unless-stopped
+  
+  #questo è per le risorse di sistema in linux
+  angular17_net8_jwt_tests_node_exporter:
+   image: quay.io/prometheus/node-exporter:v1.5.0
+   container_name: angular17_net8_jwt_tests_node_exporter
+   command: "--path.rootfs=/host"
+   pid: host
+   #restart: unless-stopped
+   volumes:
+     - /:/host:ro,rslave
+
+  angular17_net8_jwt_tests_grafana:
+    image: grafana/grafana-oss:10.2.2
+    container_name: angular17_net8_jwt_tests_grafana
+    ports:
+      - "3000:3000"
+    volumes:
+      - angular17_net8_jwt_tests_grafana_data:/var/lib/grafana
+    #restart: unless-stopped
+
+volumes:
+  angular17_net8_jwt_tests_postgres_data:
+  angular17_net8_jwt_tests_prometheus_data:
+    #driver: local
+  angular17_net8_jwt_tests_grafana_data:
+    #driver: local

@@ -1,0 +1,74 @@
+<!--<nz-spin nzSimple [nzSize]="'large'" [(ngModel)]="pageIsLoading"></nz-spin>-->
+<nz-layout>
+  <nz-header>
+    <div class="navbarHeader text-white">
+      <div><button class="btn dropdown-toggle" (click)="openSideNav()">{{'Menu' | translate}}</button></div>
+      <div class="navbarLanguage">
+        <div class="dropdown">
+          <button class="btn dropdown-toggle" type="button" id="languageDDLMenu" data-bs-toggle="dropdown" aria-expanded="false">
+            {{'Language' | translate}}
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="languageDDLMenu">
+            <li>
+              <a class="dropdown-item" (click)="changeLanguage('en')">{{'English' | translate}}</a>
+            </li>
+            <li>
+              <a class="dropdown-item" (click)="changeLanguage('it')">{{'Italian' | translate}}</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </nz-header>
+  <nz-content>
+    <div class="minPageHeight">
+      <router-outlet></router-outlet>
+    </div>
+  </nz-content>
+  <nz-footer>Wonderful footer</nz-footer>
+</nz-layout>
+<nz-drawer [nzClosable]="false"
+           [nzWidth]="250"
+           [nzVisible]="sideNavIsVisible"
+           nzPlacement="left"
+           (nzOnClose)="closeSideNav()"
+           [nzBodyStyle]="{'padding':'0px'}">
+  <ng-container *nzDrawerContent>
+    <div class="navigationContainer text-white text-center">
+      <h3 class="text-white mt-3">{{'ApplicationTitle' | translate}}</h3>
+      <div class="navigationContent mt-5">
+        <div>
+          <button class="navigation-button bg-transparent" type="button" routerLink="/home" routerLinkActive="active" ariaCurrentWhenActive="page" (click)="closeSideNav()">
+            <div class="navigation-item fs-5">{{'Home' | translate}}</div>
+          </button>
+        </div>
+        <div class="mt-1" *ngIf="checkClaim('CANDOANYTHING')">
+          <button class="navigation-button bg-transparent" type="button" data-bs-toggle="collapse" data-bs-target="#collapseAdmin">
+            <div class="navigation-item fs-5 dropdown-toggle">{{'Administration' | translate}}</div>
+          </button>
+          <div class="collapse" id="collapseAdmin">
+            <div class="cursor-pointer"
+                 routerLink="/admin/users" routerLinkActive="active"
+                 ariaCurrentWhenActive="page"
+                 (click)="closeSideNav()"
+                 *ngIf="checkClaim('CANDOANYTHING')">
+              <div class="navigation-item fs-6">{{'Users' | translate}}</div>
+            </div>
+            <div class="cursor-pointer"
+                 routerLink="/admin/roles"
+                 routerLinkActive="active"
+                 ariaCurrentWhenActive="page"
+                 (click)="closeSideNav()"
+                 *ngIf="checkClaim('CANDOANYTHING')">
+              <div class="navigation-item fs-6">{{'Roles' | translate}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="navigationFooter" *ngIf="user">
+        <div>{{user.username}}</div>
+        <button nz-button nzType="primary" (click)='logout(); closeSideNav()'>{{'Logout' | translate}}</button>
+      </div>
+    </div>
+  </ng-container>
+</nz-drawer>

@@ -1,0 +1,22 @@
+# Choose ubuntu version
+FROM mcr.microsoft.com/mssql/server:2019-CU21-ubuntu-20.04
+            
+# Create app directory
+WORKDIR /usr/src/app
+
+# Copy initialization scripts
+COPY ./AuthDB_SQLServer.sql /usr/src/app
+
+# Set environment variables, not have to write them with the docker run command
+# Note: make sure that your password matches what is in the run-initialization script 
+ENV SA_PASSWORD Password01!
+ENV ACCEPT_EULA Y
+ENV MSSQL_PID Developer
+
+# Expose port 1433 in case accessing from other container
+# Expose port externally from docker-compose.yml
+EXPOSE 1433
+
+# Run Microsoft SQL Server and initialization script (at the same time)
+# CMD /bin/bash ./entrypoint.sh
+CMD (echo "Waiting 10s for SQL instance.." && sleep 10s && echo "Waited 10s for SQL instance") && (/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P Password01! -d master -i AuthDB_SQLServer.sql & /opt/mssql/bin/sqlservr)

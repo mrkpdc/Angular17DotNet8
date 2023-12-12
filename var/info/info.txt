@@ -1,0 +1,38 @@
+il file kanban-board contiene un progetto funzionante con docker-compose e database
+
+docker desktop:
+	- scaricare docker desktop da https://www.docker.com/products/docker-desktop/
+	- scaricare se serve il kernel da https://learn.microsoft.com/en-us/windows/wsl/install-manual
+	- avviare docker desktop
+	- aprire un progetto in visual studio
+		- dovrebbe cominciare a scaricarsi le immagini necessarie da solo
+	- avviare il progetto
+	
+	
+build visual studio image:
+	- se si fa play in visual studio lui si builda una sua immagine, ma poi non ci si possono
+	creare containers da docker desktop, quindi per creare un'immagine da cui creare containers
+	bisogna buildarla tramite la cli di docker
+		- https://stackoverflow.com/questions/59001552/docker-containers-do-not-work-when-run-from-command-line
+		- nella folder del progetto dove si trova il Dockerfile:
+			- docker build -f ./Dockerfile --force-rm -t yourapiimage:dev .
+		- l'immagine comparirà in docker desktop, dove si potranno far partire n container, oppure:
+			- docker run -it --rm -e "ASPNETCORE_ENVIRONMENT=Development" -p 58817:80 --name yourapiname yourapiimage:dev
+			- il flag -it lo fa girare in interactive mode
+			- questo binda la porta 58817 alla 80
+		
+run bash in container:
+	- docker exec -it container_ID_or_name /bin/bash
+	
+build docker compose:
+	- nella folder dove si trova il file docker-compose.yml eseguire:
+		- docker-compose -f "./docker-compose.yml" build
+		
+run docker compose:
+	- nella folder dove si trova il file docker-compose.yml eseguire:
+		- docker-compose -f "./docker-compose.yml" up
+
+grafana:
+	- loggarsi in {ip}:3000 con user: admin e pass: admin, poi cambiare la password
+	- settare come datasource Prometheus mettendo come url: http://angular17_net8_jwt_tests_prometheus:9090
+	- importare le dashboard con id 1860 e 14282
