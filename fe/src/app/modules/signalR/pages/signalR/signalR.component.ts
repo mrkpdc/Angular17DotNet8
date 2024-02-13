@@ -73,7 +73,7 @@ export class SignalRComponent {
   }
 
   async startSignalR() {
-    console.log("startSignalR..");    
+    console.log("startSignalR..");
     this.initialSignalRConnectionInterval = setInterval(
       async () => {
         if (this.signalRConnection.state === signalR.HubConnectionState.Disconnected) {
@@ -136,7 +136,7 @@ export class SignalRComponent {
         this.signalRConnection.stop();
         clearInterval(this.initialSignalRConnectionInterval);
         this.authService.logOut();
-      };
+      }
     }
   }
   ngOnDestroy() {
