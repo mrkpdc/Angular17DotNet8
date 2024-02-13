@@ -157,7 +157,7 @@ export class SignalRComponent {
               this.authService.logOut();
             })
           });
-      };
+      }
     }
   }
   ngOnDestroy() {
