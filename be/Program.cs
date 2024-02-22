@@ -18,6 +18,7 @@ using Microsoft.IdentityModel.Tokens;
 using Serilog;
 using System;
 using System.Text;
+using System.Threading.Tasks;
 using static be.Auth.AuthPolicyManager;
 
 namespace be
@@ -125,6 +126,23 @@ namespace be
             }).AddJwtBearer(o =>
             {
                 o.TokenValidationParameters = tokenValidationParameters;
+                o.Events = new JwtBearerEvents()
+                {
+                    OnMessageReceived = context =>
+                    {
+                        var accessToken = context.Request.Query["access_token"];
+
+                        // If the request is for our hub...
+                        var path = context.HttpContext.Request.Path;
+                        if (!string.IsNullOrEmpty(accessToken) &&
+                            (path.StartsWithSegments("/api/signalRHub")))
+                        {
+                            // Read the token out of the query string
+                            context.Token = accessToken;
+                        }
+                        return Task.CompletedTask;
+                    }
+                };
             });
 
             builder.Services.AddAuthorization(options =>
