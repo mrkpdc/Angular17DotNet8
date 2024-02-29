@@ -67,7 +67,7 @@ services:
       - angular17_net8_prometheus_data:/prometheus
     #restart: unless-stopped
 
-  #questo è per le risorse dei containers in linux
+  #questo Ã¨ per le risorse dei containers in linux
   angular17_net8_cadvisor:
     image: gcr.io/cadvisor/cadvisor:v0.47.0     
     container_name: angular17_net8_cadvisor
@@ -84,7 +84,7 @@ services:
     privileged: true
     #restart: unless-stopped
 
-  #questo è per le risorse di sistema in linux
+  #questo Ã¨ per le risorse di sistema in linux
   angular17_net8_node_exporter:
    image: quay.io/prometheus/node-exporter:v1.5.0
    container_name: angular17_net8_node_exporter
