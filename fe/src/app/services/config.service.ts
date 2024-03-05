@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { StateService } from './state.service';
 
 export interface Configs {
   backendUrl: string;
@@ -11,7 +12,8 @@ export interface Configs {
 export class ConfigService {
   private config: Configs;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+    private stateService: StateService) { }
 
   loadConfigs() {
     this.http
@@ -21,6 +23,8 @@ export class ConfigService {
         {
           backendUrl: data['backendUrl']
         }
+        console.log("loadConfig", data);
+        this.stateService.setConfig(data);
       }));
   }
 

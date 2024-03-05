@@ -7,6 +7,7 @@ import { ConfigService } from '@services/config.service';
 import { StateService } from '@services/state.service';
 import { AuthService } from '@services/auth.service';
 import { NGXLogger } from "ngx-logger";
+import { SignalRService } from './services/signalR.service';
 
 @Component({
   selector: 'app-root',
@@ -24,6 +25,7 @@ export class AppComponent {
     private configService: ConfigService,
     private stateService: StateService,
     private authService: AuthService,
+    private signalRService: SignalRService,
     //private router: Router,
     private logger: NGXLogger) {
 
@@ -48,7 +50,11 @@ export class AppComponent {
       .pipe(takeUntil(this.subscriptions))
       .subscribe({
         next: (user => {
+          console.log("get user", user);
           this.user = user;
+          if (user) {
+            this.signalRService.startSignalR();
+          }
         }),
         error: (error => {
           this.logger.error(error);

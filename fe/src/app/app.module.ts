@@ -32,6 +32,7 @@ import { IconDefinition } from '@ant-design/icons-angular';
 //questo carica tutte le icone
 import * as AllIcons from '@ant-design/icons-angular/icons';
 import config from '../assets/config.json';
+import { SignalRService } from './services/signalR.service';
 const antDesignIcons = AllIcons as {
   [key: string]: IconDefinition;
 };
@@ -77,6 +78,7 @@ registerLocaleData(en);
     StateService,
     AuthService,
     AuthGuard,
+    SignalRService,
     { provide: NZ_I18N, useValue: en_US }
   ],
   bootstrap: [AppComponent]

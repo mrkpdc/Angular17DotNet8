@@ -42,9 +42,9 @@
             <div class="navigation-item fs-5">{{'Home' | translate}}</div>
           </button>
         </div>
-        <div *ngIf="checkClaim('CanRegisterToSignalR')">
-          <button class="navigation-button bg-transparent" type="button" routerLink="/signalR/signalR" routerLinkActive="active" ariaCurrentWhenActive="page" (click)="closeSideNav()">
-            <div class="navigation-item fs-5">{{'SignalR' | translate}}</div>
+        <div *ngIf="checkClaim('CanUseNotifications')">
+          <button class="navigation-button bg-transparent" type="button" routerLink="/notifications/notifications" routerLinkActive="active" ariaCurrentWhenActive="page" (click)="closeSideNav()">
+            <div class="navigation-item fs-5">{{'Notifications' | translate}}</div>
           </button>
         </div>
         <div class="mt-1" *ngIf="checkClaim('CANDOANYTHING')">
