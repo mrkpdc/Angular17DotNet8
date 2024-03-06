@@ -23,7 +23,6 @@ export class ConfigService {
         {
           backendUrl: data['backendUrl']
         }
-        console.log("loadConfig", data);
         this.stateService.setConfig(data);
       }));
   }

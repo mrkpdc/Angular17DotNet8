@@ -50,10 +50,12 @@ export class AppComponent {
       .pipe(takeUntil(this.subscriptions))
       .subscribe({
         next: (user => {
-          console.log("get user", user);
           this.user = user;
           if (user) {
             this.signalRService.startSignalR();
+          }
+          else {
+            this.signalRService.stopSignalR();
           }
         }),
         error: (error => {

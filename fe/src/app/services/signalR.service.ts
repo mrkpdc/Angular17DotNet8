@@ -21,14 +21,14 @@ export class SignalRService {
     private logger: NGXLogger) {
   }
 
-  async startSignalR() {
-    console.log("signalrconnection", this.signalRConnection);
+  startSignalR() {
+    //console.log("signalrconnection", this.signalRConnection);
     if (!this.signalRConnection) {
       this.stateService.getConfig()
         .pipe(takeUntil(this.subscriptions))
         .subscribe({
           next: (config => {
-            console.log("config", config);
+            //console.log("config", config);
             if (config && config.backendUrl) {
               this.backendUrl = config.backendUrl;
               this.buildSignalRConnection();
@@ -44,7 +44,7 @@ export class SignalRService {
   }
 
   private buildSignalRConnection() {
-    console.log("building signalr connection..");
+    //console.log("building signalr connection..");
     if (!this.signalRConnection) {
       this.signalRConnection = new signalR.HubConnectionBuilder()
         .withUrl(this.backendUrl + "signalRHub"
@@ -68,7 +68,6 @@ export class SignalRService {
 
       this.signalRConnection.onclose(async (error) => {
         console.log("onclose", error);
-        console.log(Math.random());
         this.handleSignalRError(error);
       });
 
@@ -96,14 +95,27 @@ export class SignalRService {
   }
 
   private connectSignalR() {
+    //console.log("connect signalr !");
+    //console.log(this.initialSignalRConnectionInterval);
     if (this.signalRConnection && this.signalRConnection.state === signalR.HubConnectionState.Disconnected) {
-      console.log("connection already exists !");
-      this.initialSignalRConnectionInterval = setInterval(
-        async () => {
+      //console.log("connection already exists !");
+      //console.log(this.initialSignalRConnectionInterval);
+      if (this.initialSignalRConnectionInterval) {
+        //console.log("clearing interval");
+        clearInterval(this.initialSignalRConnectionInterval);
+        this.initialSignalRConnectionInterval = null;
+      }
+      if (!this.initialSignalRConnectionInterval) {
+        //console.log("creating new interval");
+
+        let signalRConnectionFunction = async () => {
+          //console.log("connection", this.signalRConnection);
+          //if (this.signalRConnection)
+          //  console.log("connection state", this.signalRConnection.state);
           if (this.signalRConnection && this.signalRConnection.state === signalR.HubConnectionState.Disconnected) {
-            console.log("trying initial connection..");
+            //console.log("trying initial connection..");
             await this.signalRConnection.start().then(() => {
-              console.log("SignalR connected");
+              //console.log("SignalR connected");
               if (this.stateService.getCachedSignalRConnectionId() == '')
                 this.stateService.setCachedSignalRConnectionId(this.signalRConnection.connectionId);
 
@@ -118,9 +130,14 @@ export class SignalRService {
             });
           }
           else {
+            //console.log("clear interval !");
             clearInterval(this.initialSignalRConnectionInterval);
+            this.initialSignalRConnectionInterval = null;
           }
-        }, 5000);
+        };
+        signalRConnectionFunction();
+        this.initialSignalRConnectionInterval = setInterval(signalRConnectionFunction, 5000);
+      }
     }
   }
 
@@ -129,8 +146,13 @@ export class SignalRService {
       console.log(error);
       if (error.message.toLowerCase().includes("unauthorized")
         || error.message.includes("401")) {
+        //console.log("stop and logout signalr !");
+        //if (!this.getIsSignalRDisconnected()) {
+        //  console.log("connection", this.signalRConnection);
+        //  console.log("connection state", this.signalRConnection.state);
         this.stopSignalR();
         this.authService.logOut();
+        //}
       }
       else
         this.logger.error(error);
@@ -139,24 +161,26 @@ export class SignalRService {
 
   stopSignalR() {
     if (this.signalRConnection) {
-      console.log("stopping connection !");
+      //console.log("stopping connection !");
       this.signalRConnection.stop();
     }
-    if (this.initialSignalRConnectionInterval) {
-      console.log("clearing interval !");
-      clearInterval(this.initialSignalRConnectionInterval);
-    }
+    //if (this.initialSignalRConnectionInterval) {
+    //console.log("clearing interval !");
+    clearInterval(this.initialSignalRConnectionInterval);
+    this.initialSignalRConnectionInterval = null;
+    //}
   }
 
-  getIsSignalRDisconnected() {
-    let isDisconnected = false;
-    if (!this.signalRConnection || this.signalRConnection === signalR.HubConnectionState.Disconnected)
-      isDisconnected = true;
-    return isDisconnected;
-  }
+  //getIsSignalRDisconnected() {
+  //  let isDisconnected = false;
+  //  if (!this.signalRConnection ||
+  //    (this.signalRConnection && this.signalRConnection.state === signalR.HubConnectionState.Disconnected))
+  //    isDisconnected = true;
+  //  return isDisconnected;
+  //}
 
   ngOnDestroy() {
-    console.log("destroy signalr service");
+    //console.log("destroy signalr service");
     this.stopSignalR();
     this.subscriptions.complete();
   }
