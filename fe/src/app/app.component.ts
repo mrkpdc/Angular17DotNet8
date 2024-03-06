@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Subject } from 'rxjs';
-//import { Router } from '@angular/router';
+import { ApiService } from '@services/api.service';
 import { takeUntil } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 import { ConfigService } from '@services/config.service';
@@ -18,12 +18,16 @@ export class AppComponent {
   user: any;
   language: any;
   sideNavIsVisible: boolean = false;
+  notificationsDrawerIsVisible: boolean = false;
   pageIsLoading: boolean = false;
+  public hasNotifications: boolean = false;
+  public unreadNotifications: any = [];
   private subscriptions: Subject<any> = new Subject();
 
   constructor(public translateService: TranslateService,
     private configService: ConfigService,
     private stateService: StateService,
+    private apiService: ApiService,
     private authService: AuthService,
     private signalRService: SignalRService,
     //private router: Router,
@@ -62,6 +66,20 @@ export class AppComponent {
           this.logger.error(error);
         })
       });
+
+    this.stateService.getHasNotifications()
+      .pipe(takeUntil(this.subscriptions))
+      .subscribe({
+        next: (hasNotifications => {
+          if (hasNotifications) {
+            console.log("hasNotifications !", hasNotifications);
+            this.hasNotifications = true;
+          }
+        }),
+        error: (error => {
+          this.logger.error(error);
+        })
+      });
   }
 
   openSideNav(): void {
@@ -70,6 +88,33 @@ export class AppComponent {
 
   closeSideNav(): void {
     this.sideNavIsVisible = false;
+  }
+
+  openNotificationsDrawer(): void {
+    this.notificationsDrawerIsVisible = true;
+    this.hasNotifications = false;
+    this.getUnreadNotifications();
+  }
+
+  getUnreadNotifications() {
+    this.pageIsLoading = true;
+    this.apiService.getUnreadNotifications()
+      .pipe(takeUntil(this.subscriptions))
+      .subscribe({
+        next: (unreadNotifications => {
+          this.pageIsLoading = false;
+          this.unreadNotifications = unreadNotifications;
+        }),
+        error: (error => {
+          this.pageIsLoading = false;
+          this.logger.error(error);
+        })
+      });
+  }
+
+  closeNotificationsDrawer(): void {
+    this.notificationsDrawerIsVisible = false;
+    this.hasNotifications = false;
   }
 
   logout() {

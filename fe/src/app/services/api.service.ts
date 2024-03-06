@@ -164,4 +164,9 @@ export class ApiService {
     return this.http.post<any>('SignalR/SendMessageToUser', body, this.httpOptions);
   }
   //</signalR>
+  //<notifications>
+  getUnreadNotifications() {
+    return this.http.get<any>('Notifications/GetUnreadNotifications', this.httpOptions);
+  }
+  //</notifications>
 }

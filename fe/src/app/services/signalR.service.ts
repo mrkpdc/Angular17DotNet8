@@ -88,6 +88,7 @@ export class SignalRService {
 
       this.signalRConnection.on("ReceiveMessage", async (data) => {
         console.log("Received message from SignalR:", data);
+        this.stateService.setHasNotifications(true);
       });
     }
     if (this.signalRConnection)

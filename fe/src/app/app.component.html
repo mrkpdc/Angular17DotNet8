@@ -4,18 +4,29 @@
     <div class="navbarHeader text-white">
       <div><button class="btn dropdown-toggle" (click)="openSideNav()">{{'Menu' | translate}}</button></div>
       <div class="navbarLanguage">
-        <div class="dropdown">
-          <button class="btn dropdown-toggle" type="button" id="languageDDLMenu" data-bs-toggle="dropdown" aria-expanded="false">
-            {{'Language' | translate}}
-          </button>
-          <ul class="dropdown-menu" aria-labelledby="languageDDLMenu">
-            <li>
-              <a class="dropdown-item" (click)="changeLanguage('en')">{{'English' | translate}}</a>
-            </li>
-            <li>
-              <a class="dropdown-item" (click)="changeLanguage('it')">{{'Italian' | translate}}</a>
-            </li>
-          </ul>
+        <div nz-row class="text-center">
+          <div nz-col nzSpan="22">
+            <div class="dropdown">
+              <button class="btn dropdown-toggle" type="button" id="languageDDLMenu" data-bs-toggle="dropdown" aria-expanded="false">
+                {{'Language' | translate}}
+              </button>
+              <ul class="dropdown-menu" aria-labelledby="languageDDLMenu">
+                <li>
+                  <a class="dropdown-item" (click)="changeLanguage('en')">{{'English' | translate}}</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" (click)="changeLanguage('it')">{{'Italian' | translate}}</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div nz-col nzSpan="2" class="notificationsIconContainer">
+            <span nz-icon
+                  nzType="bell"
+                  (click)="openNotificationsDrawer()"
+                  [nzTheme]="hasNotifications ? 'fill' : 'outline'"
+                  [ngClass]="hasNotifications ? 'notificationsIconFill': 'notificationsIconOutline'"></span>
+          </div>
         </div>
       </div>
     </div>
@@ -27,6 +38,7 @@
   </nz-content>
   <nz-footer>Wonderful footer</nz-footer>
 </nz-layout>
+<!--navigation drawer-->
 <nz-drawer [nzClosable]="false"
            [nzWidth]="250"
            [nzVisible]="sideNavIsVisible"
@@ -77,3 +89,17 @@
     </div>
   </ng-container>
 </nz-drawer>
+<!--/navigation drawer-->
+<!--notifications drawer-->
+<nz-drawer [nzClosable]="false"
+           [nzVisible]="notificationsDrawerIsVisible"
+           nzPlacement="right"
+           nzTitle="Basic Drawer"
+           (nzOnClose)="closeNotificationsDrawer()">
+  <ng-container *nzDrawerContent>
+    <p>Some contents...</p>
+    <p>Some contents...</p>
+    <p>Some contents...</p>
+  </ng-container>
+</nz-drawer>
+<!--/notifications drawer-->
