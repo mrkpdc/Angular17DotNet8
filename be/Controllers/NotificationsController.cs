@@ -29,7 +29,15 @@ namespace be.Controllers
                 //Response.StatusCode = (int)result.StatusCode;
                 //return result.Result;
                 Response.StatusCode = 200;
-                return new string[] { "value1", "value2" };
+                Random r = new Random();
+                return new string[] {
+                    "value" + r.Next(0, 10),
+                    "value" + r.Next(0, 10),
+                    "value" + r.Next(0, 10),
+                    "value" + r.Next(0, 10),
+                    "value" + r.Next(0, 10),
+                    "value" + r.Next(0, 10)
+                };
             }
             catch (Exception ex)
             {

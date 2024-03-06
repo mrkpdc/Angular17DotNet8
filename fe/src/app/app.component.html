@@ -94,12 +94,11 @@
 <nz-drawer [nzClosable]="false"
            [nzVisible]="notificationsDrawerIsVisible"
            nzPlacement="right"
-           nzTitle="Basic Drawer"
            (nzOnClose)="closeNotificationsDrawer()">
   <ng-container *nzDrawerContent>
-    <p>Some contents...</p>
-    <p>Some contents...</p>
-    <p>Some contents...</p>
+    <div *ngFor="let notification of unreadNotifications">
+      {{notification}}
+    </div>
   </ng-container>
 </nz-drawer>
 <!--/notifications drawer-->
