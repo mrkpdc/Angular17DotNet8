@@ -20,7 +20,7 @@
               </ul>
             </div>
           </div>
-          <div nz-col nzSpan="2" class="notificationsIconContainer">
+          <div nz-col nzSpan="2" class="notificationsIconContainer" *ngIf="user">
             <span nz-icon
                   nzType="bell"
                   (click)="openNotificationsDrawer()"
