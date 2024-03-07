@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using be.DB.Entities;
+using be.Services;
 
 namespace be.DB.Contexts
 {
@@ -9,6 +10,8 @@ namespace be.DB.Contexts
             : base(options)
         {
         }
+
+        public DbSet<Notification> Notifications { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

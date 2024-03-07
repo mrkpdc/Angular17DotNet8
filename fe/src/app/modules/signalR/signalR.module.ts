@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AuthGuard } from '@services/auth.guard';
 import { NgZorroImportsModule } from '../../ngZorroImports.module';
-import { NotificationsComponent } from './pages/notifications/notifications.component';
+import { SignalRComponent } from './pages/signalR/signalR.component';
 
 const routes: Routes = [
   {
@@ -14,18 +14,18 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
-    path: 'notifications',
-    component: NotificationsComponent,
+    path: 'signalR',
+    component: SignalRComponent,
     canActivate: [AuthGuard],
     data: {
-      claim: 'CanUseNotifications'
+      claim: 'CanRegisterToSignalR'
     }
   }
 ];
 
 @NgModule({
   declarations: [
-    NotificationsComponent,
+    SignalRComponent,
   ],
   imports: [
     RouterModule.forChild(routes),
@@ -37,4 +37,4 @@ const routes: Routes = [
   providers: [],
   exports: []
 })
-export class NotificationsModule { }
+export class SignalRModule { }

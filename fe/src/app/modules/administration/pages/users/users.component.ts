@@ -510,4 +510,9 @@ export class UsersComponent {
       });
   }
   //</existing role>
+
+  ngOnDestroy(): void {
+    this.subscriptions.next({});
+    this.subscriptions.complete();
+  }
 }

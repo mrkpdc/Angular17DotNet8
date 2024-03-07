@@ -13,8 +13,8 @@ const routes: Routes = [
     loadChildren: () => import('./modules/home/home.module').then(m => m.HomeModule)
   },
   {
-    path: 'notifications',
-    loadChildren: () => import('./modules/notifications/notifications.module').then(m => m.NotificationsModule)
+    path: 'signalR',
+    loadChildren: () => import('./modules/signalR/signalR.module').then(m => m.SignalRModule)
   },
   {
     path: 'admin',

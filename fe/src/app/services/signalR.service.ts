@@ -180,9 +180,10 @@ export class SignalRService {
   //  return isDisconnected;
   //}
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     //console.log("destroy signalr service");
     this.stopSignalR();
+    this.subscriptions.next({});
     this.subscriptions.complete();
   }
 }

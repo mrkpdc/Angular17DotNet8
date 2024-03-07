@@ -5,11 +5,11 @@ import { NGXLogger } from 'ngx-logger';
 import { ApiService } from '@services/api.service';
 
 @Component({
-  selector: 'notifications-component',
-  templateUrl: './notifications.component.html',
-  styleUrls: ['./notifications.component.less']
+  selector: 'signalR-component',
+  templateUrl: './signalR.component.html',
+  styleUrls: ['./signalR.component.less']
 })
-export class NotificationsComponent {
+export class SignalRComponent {
   pageIsLoading: boolean = false;
   private subscriptions: Subject<any> = new Subject();
 
@@ -83,7 +83,8 @@ export class NotificationsComponent {
   }
   //</send messages>
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
+    this.subscriptions.next({});
     this.subscriptions.complete();
   }
 }

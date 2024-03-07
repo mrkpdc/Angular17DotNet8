@@ -1,14 +1,10 @@
-﻿using be.Common;
-using be.Hubs;
-using Microsoft.AspNetCore.Authorization;
+﻿using be.Hubs;
 using Microsoft.AspNetCore.SignalR;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System;
 using System.Linq;
 using static be.Hubs.SignalRHub;
-using be.DB.Entities.AuthEntities;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace be.Services
 {

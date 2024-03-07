@@ -21,7 +21,7 @@ export class AppComponent {
   notificationsDrawerIsVisible: boolean = false;
   pageIsLoading: boolean = false;
   public hasNotifications: boolean = false;
-  public unreadNotifications: any = [];
+  public notifications: any = [];
   private subscriptions: Subject<any> = new Subject();
 
   constructor(public translateService: TranslateService,
@@ -72,7 +72,6 @@ export class AppComponent {
       .subscribe({
         next: (hasNotifications => {
           if (hasNotifications) {
-            console.log("hasNotifications !", hasNotifications);
             this.hasNotifications = true;
           }
         }),
@@ -80,6 +79,19 @@ export class AppComponent {
           this.logger.error(error);
         })
       });
+  }
+
+  ngOnInit() {
+    let initialNotificationsInterval = setInterval(() => {
+      let configs = this.configService.getConfig();
+      if (configs) {
+        let backendUrl = this.configService.getBackendUrl();
+        if (backendUrl) {
+          this.getNotifications();
+          clearInterval(initialNotificationsInterval);
+        }
+      }
+    }, 2000);
   }
 
   openSideNav(): void {
@@ -93,17 +105,54 @@ export class AppComponent {
   openNotificationsDrawer(): void {
     this.notificationsDrawerIsVisible = true;
     this.hasNotifications = false;
-    this.getUnreadNotifications();
+    this.getNotifications();
   }
 
-  getUnreadNotifications() {
+  getNotifications() {
     this.pageIsLoading = true;
-    this.apiService.getUnreadNotifications()
+    this.apiService.getNotifications()
       .pipe(takeUntil(this.subscriptions))
       .subscribe({
-        next: (unreadNotifications => {
+        next: (response => {
           this.pageIsLoading = false;
-          this.unreadNotifications = unreadNotifications;
+          this.notifications = response.notifications;
+          for (let i = 0; i < this.notifications.length; i++) {
+            if (!this.notifications[i].readDate) {
+              this.hasNotifications = true;
+              break;
+            }
+          }
+        }),
+        error: (error => {
+          this.pageIsLoading = false;
+          this.logger.error(error);
+        })
+      });
+  }
+
+  setUnreadNotificationsAsRead() {
+    this.pageIsLoading = true;
+    this.apiService.setUnreadNotificationsAsRead()
+      .pipe(takeUntil(this.subscriptions))
+      .subscribe({
+        next: (response => {
+          this.pageIsLoading = false;
+        }),
+        error: (error => {
+          this.pageIsLoading = false;
+          this.logger.error(error);
+        })
+      });
+  }
+
+  deleteNotification(notificationId: string) {
+    this.pageIsLoading = true;
+    this.apiService.deleteNotification(notificationId)
+      .pipe(takeUntil(this.subscriptions))
+      .subscribe({
+        next: (response => {
+          this.pageIsLoading = false;
+          this.getNotifications();
         }),
         error: (error => {
           this.pageIsLoading = false;
@@ -115,6 +164,7 @@ export class AppComponent {
   closeNotificationsDrawer(): void {
     this.notificationsDrawerIsVisible = false;
     this.hasNotifications = false;
+    this.setUnreadNotificationsAsRead();
   }
 
   logout() {
@@ -138,6 +188,7 @@ export class AppComponent {
   }
 
   ngOnDestroy(): void {
+    this.subscriptions.next({});
     this.subscriptions.complete();
   }
 }
