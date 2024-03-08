@@ -25,7 +25,8 @@ namespace be.Services
         {
             System.Diagnostics.Debug.WriteLine("SendMessageToClient args: " + clientId + "; message: " + message);
             ConnectedClient? connectedClient = SignalRHub.ConnectedClients.Where(cc => cc.ClientId.ToString() == clientId).FirstOrDefault();
-            if (connectedClient != null) {
+            if (connectedClient != null)
+            {
                 await this.signalRHubContext.Clients.Clients(connectedClient.CurrentConnectionId).SendAsync("ReceiveMessage", clientId + " " + message);
             }
         }
