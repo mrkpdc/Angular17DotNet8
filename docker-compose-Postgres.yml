@@ -34,6 +34,7 @@ services:
       - Serilog__WriteTo__2__Args__tableName=Logs
       - Serilog__WriteTo__2__Args__AutoCreateSqlTable=True      
       - ConnectionStrings__AuthDB_Postgres=Server=angular17_net8_postgres;Port=5432;Database=AuthDB;UserId=postgres;Password=postgres;
+      - ConnectionStrings__DbContext_Postgres=Server=angular17_net8_postgres;Port=5432;Database=AuthDB;UserId=postgres;Password=postgres;
     links:
       - angular17_net8_postgres
 
