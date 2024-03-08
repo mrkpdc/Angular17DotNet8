@@ -49,17 +49,44 @@ export class AppComponent {
       });
 
     this.configService.loadConfigs();
+  }
 
+  ngOnInit() {
+    let gettingNotifications = false;
     this.stateService.getUser()
       .pipe(takeUntil(this.subscriptions))
       .subscribe({
         next: (user => {
+          //console.log("user", user);
           this.user = user;
           if (user) {
+            //console.log("getting notifications user not null", gettingNotifications);
             this.signalRService.startSignalR();
+            let initialNotificationsInterval = setInterval(() => {
+              //console.log("getting configs");
+              let configs = this.configService.getConfig();
+              if (configs) {
+                let backendUrl = this.configService.getBackendUrl();
+                if (backendUrl) {
+                  if (!gettingNotifications) {
+                    gettingNotifications = true;
+                    //console.log("get notifications constructor !");
+                    //console.log(this.notifications);
+                    this.getNotifications();
+                    clearInterval(initialNotificationsInterval);
+                  }
+                  else
+                    clearInterval(initialNotificationsInterval);
+                }
+              }
+            }, 100);
           }
           else {
+            gettingNotifications = false;
+            this.closeNotificationsDrawer();
+            //console.log("getting notification user null", gettingNotifications);
             this.signalRService.stopSignalR();
+            //console.log("no user constructor :(");
           }
         }),
         error: (error => {
@@ -79,19 +106,21 @@ export class AppComponent {
           this.logger.error(error);
         })
       });
-  }
-
-  ngOnInit() {
-    let initialNotificationsInterval = setInterval(() => {
-      let configs = this.configService.getConfig();
-      if (configs) {
-        let backendUrl = this.configService.getBackendUrl();
-        if (backendUrl) {
-          this.getNotifications();
-          clearInterval(initialNotificationsInterval);
-        }
-      }
-    }, 2000);
+    //let initialNotificationsInterval = setInterval(() => {
+    //  let configs = this.configService.getConfig();
+    //  if (configs) {
+    //    let backendUrl = this.configService.getBackendUrl();
+    //    if (backendUrl) {
+    //      if (this.user) {
+    //        console.log("get notifications !");
+    //        this.getNotifications();
+    //        clearInterval(initialNotificationsInterval);
+    //      }
+    //      else
+    //        console.log("no user :(");
+    //    }
+    //  }
+    //}, 2000);
   }
 
   openSideNav(): void {
@@ -105,7 +134,17 @@ export class AppComponent {
   openNotificationsDrawer(): void {
     this.notificationsDrawerIsVisible = true;
     this.hasNotifications = false;
+
+    //console.log("get notifications query !");
     this.getNotifications();
+  }
+
+  closeNotificationsDrawer(): void {
+    //console.log("close drawer !");
+    this.notificationsDrawerIsVisible = false;
+    this.hasNotifications = false;
+    if (this.user)
+      this.setUnreadNotificationsAsRead();
   }
 
   getNotifications() {
@@ -159,12 +198,6 @@ export class AppComponent {
           this.logger.error(error);
         })
       });
-  }
-
-  closeNotificationsDrawer(): void {
-    this.notificationsDrawerIsVisible = false;
-    this.hasNotifications = false;
-    this.setUnreadNotificationsAsRead();
   }
 
   logout() {

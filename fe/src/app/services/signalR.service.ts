@@ -110,6 +110,7 @@ export class SignalRService {
         //console.log("creating new interval");
 
         let signalRConnectionFunction = async () => {
+          console.log("signalr function");
           //console.log("connection", this.signalRConnection);
           //if (this.signalRConnection)
           //  console.log("connection state", this.signalRConnection.state);
