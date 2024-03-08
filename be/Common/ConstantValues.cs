@@ -35,6 +35,7 @@ namespace be.Common
                     public const string CanSendSignalRMessageToClient = "CanSendSignalRMessageToClient";
                     public const string CanSendSignalRMessageToConnection = "CanSendSignalRMessageToConnection";
                     public const string CanSendSignalRMessageToUser = "CanSendSignalRMessageToUser";
+                    public const string CanUseNotifications = "CanUseNotifications";
                 }
                 public static class Values
                 {
