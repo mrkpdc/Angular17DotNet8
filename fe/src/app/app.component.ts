@@ -106,21 +106,6 @@ export class AppComponent {
           this.logger.error(error);
         })
       });
-    //let initialNotificationsInterval = setInterval(() => {
-    //  let configs = this.configService.getConfig();
-    //  if (configs) {
-    //    let backendUrl = this.configService.getBackendUrl();
-    //    if (backendUrl) {
-    //      if (this.user) {
-    //        console.log("get notifications !");
-    //        this.getNotifications();
-    //        clearInterval(initialNotificationsInterval);
-    //      }
-    //      else
-    //        console.log("no user :(");
-    //    }
-    //  }
-    //}, 2000);
   }
 
   openSideNav(): void {

@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { ConfigService } from '@services/config.service';
 import * as signalR from '@microsoft/signalr';
 import { StateService } from '@services/state.service';
 import { NGXLogger } from 'ngx-logger';
@@ -15,8 +14,7 @@ export class SignalRService {
   private signalRConnection: any;
   private subscriptions: Subject<any> = new Subject();
 
-  constructor(private readonly configService: ConfigService,
-    private authService: AuthService,
+  constructor(private authService: AuthService,
     private stateService: StateService,
     private logger: NGXLogger) {
   }
