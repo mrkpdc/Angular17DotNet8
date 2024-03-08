@@ -49,3 +49,12 @@ CREATE TABLE "AspNetRoleClaims"(
 	"ClaimType" text NULL,
 	"ClaimValue" text NULL,
 	"RoleId" text NOT NULL);
+
+CREATE TABLE "Notifications"(
+	"Id" uuid PRIMARY KEY NOT NULL,
+	"SenderId" uuid NULL,
+	"RecipientId" uuid NULL,
+	"Message" text NULL,
+	"CreationDate" timestamp without time zone NOT NULL,
+	"ReadDate" timestamp NULL
+);

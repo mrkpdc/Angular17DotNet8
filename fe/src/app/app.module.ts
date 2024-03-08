@@ -13,6 +13,8 @@ import { StateService } from "@services/state.service";
 import { Interceptor } from '@services/interceptor.service';
 import { AuthService } from '@services/auth.service';
 import { AuthGuard } from '@services/auth.guard';
+import { SignalRService } from '@services/signalR.service';
+
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
@@ -77,6 +79,7 @@ registerLocaleData(en);
     StateService,
     AuthService,
     AuthGuard,
+    SignalRService,
     { provide: NZ_I18N, useValue: en_US }
   ],
   bootstrap: [AppComponent]
