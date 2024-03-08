@@ -13,6 +13,8 @@ import { StateService } from "@services/state.service";
 import { Interceptor } from '@services/interceptor.service';
 import { AuthService } from '@services/auth.service';
 import { AuthGuard } from '@services/auth.guard';
+import { SignalRService } from '@services/signalR.service';
+
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
@@ -32,7 +34,6 @@ import { IconDefinition } from '@ant-design/icons-angular';
 //questo carica tutte le icone
 import * as AllIcons from '@ant-design/icons-angular/icons';
 import config from '../assets/config.json';
-import { SignalRService } from './services/signalR.service';
 const antDesignIcons = AllIcons as {
   [key: string]: IconDefinition;
 };
