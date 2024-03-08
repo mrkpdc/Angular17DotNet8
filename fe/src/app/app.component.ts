@@ -6,8 +6,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { ConfigService } from '@services/config.service';
 import { StateService } from '@services/state.service';
 import { AuthService } from '@services/auth.service';
+import { SignalRService } from '@services/signalR.service';
 import { NGXLogger } from "ngx-logger";
-import { SignalRService } from './services/signalR.service';
 
 @Component({
   selector: 'app-root',
