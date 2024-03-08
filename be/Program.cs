@@ -169,6 +169,7 @@ namespace be
 
             builder.Services.AddScoped<AuthService>();
             builder.Services.AddScoped<SignalRService>();
+            builder.Services.AddScoped<NotificationsService>();
             builder.Services.AddCors(o => o.AddPolicy("Cors", builder =>
             {
                 builder.AllowAnyHeader()
