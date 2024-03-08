@@ -340,4 +340,9 @@ export class RolesComponent {
       });
   }
   //</existing claim>
+
+  ngOnDestroy(): void {
+    this.subscriptions.next({});
+    this.subscriptions.complete();
+  }
 }

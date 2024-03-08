@@ -41,4 +41,8 @@ export class HomeComponent {
         this.pageIsLoading = false;
       });
   }
+  ngOnDestroy(): void {
+    this.subscriptions.next({});
+    this.subscriptions.complete();
+  }
 }

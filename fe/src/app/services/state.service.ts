@@ -8,6 +8,7 @@ export class StateService {
   private User: BehaviorSubject<any> = new BehaviorSubject({});
   private Config: BehaviorSubject<any> = new BehaviorSubject({});
   private Language: BehaviorSubject<any> = new BehaviorSubject({});
+  private HasNotifications: BehaviorSubject<boolean> = new BehaviorSubject(false);
   private Claims: [] = [];
   private CachedSignalRConnectionId: string = '';
 
@@ -113,5 +114,11 @@ export class StateService {
       localStorage.setItem('Language', language);
     else
       localStorage.removeItem('Language');
+  }
+  getHasNotifications() {
+    return this.HasNotifications;
+  }
+  setHasNotifications(hasNotifications: boolean) {
+    this.HasNotifications.next(hasNotifications);
   }
 }

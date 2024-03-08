@@ -4,18 +4,29 @@
     <div class="navbarHeader text-white">
       <div><button class="btn dropdown-toggle" (click)="openSideNav()">{{'Menu' | translate}}</button></div>
       <div class="navbarLanguage">
-        <div class="dropdown">
-          <button class="btn dropdown-toggle" type="button" id="languageDDLMenu" data-bs-toggle="dropdown" aria-expanded="false">
-            {{'Language' | translate}}
-          </button>
-          <ul class="dropdown-menu" aria-labelledby="languageDDLMenu">
-            <li>
-              <a class="dropdown-item" (click)="changeLanguage('en')">{{'English' | translate}}</a>
-            </li>
-            <li>
-              <a class="dropdown-item" (click)="changeLanguage('it')">{{'Italian' | translate}}</a>
-            </li>
-          </ul>
+        <div nz-row class="text-center">
+          <div nz-col nzSpan="22">
+            <div class="dropdown">
+              <button class="btn dropdown-toggle" type="button" id="languageDDLMenu" data-bs-toggle="dropdown" aria-expanded="false">
+                {{'Language' | translate}}
+              </button>
+              <ul class="dropdown-menu" aria-labelledby="languageDDLMenu">
+                <li>
+                  <a class="dropdown-item" (click)="changeLanguage('en')">{{'English' | translate}}</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" (click)="changeLanguage('it')">{{'Italian' | translate}}</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div nz-col nzSpan="2" class="notificationsIconContainer" *ngIf="user">
+            <span nz-icon
+                  nzType="bell"
+                  (click)="openNotificationsDrawer()"
+                  [nzTheme]="hasNotifications ? 'fill' : 'outline'"
+                  [ngClass]="hasNotifications ? 'notificationsIconFill': 'notificationsIconOutline'"></span>
+          </div>
         </div>
       </div>
     </div>
@@ -27,6 +38,7 @@
   </nz-content>
   <nz-footer>Wonderful footer</nz-footer>
 </nz-layout>
+<!--navigation drawer-->
 <nz-drawer [nzClosable]="false"
            [nzWidth]="250"
            [nzVisible]="sideNavIsVisible"
@@ -77,3 +89,62 @@
     </div>
   </ng-container>
 </nz-drawer>
+<!--/navigation drawer-->
+<!--notifications drawer-->
+<nz-drawer [nzClosable]="false"
+           [nzVisible]="notificationsDrawerIsVisible"
+           nzPlacement="right"
+           (nzOnClose)="closeNotificationsDrawer()"
+           [nzBodyStyle]="{'padding':'0px'}">
+  <ng-container *nzDrawerContent>
+    <div class="notificationsContainer text-white">
+      <div *ngIf="notifications.length == 0">
+        <h5 class="text-center text-white">{{'NoNotifications' | translate }}</h5>
+      </div>
+      <div *ngIf="notifications.length > 0">
+        <div *ngFor="let notification of notifications" class="mt-3">
+          <div [ngClass]="!notification.readDate ? 'unreadNotification': ''">
+            <div nz-row style="float:right">
+              <div nz-col>
+                <i nz-icon nzType="delete" nzTheme="fill" class="iconVerticalAlign pointerCursor redColor"
+                   (click)="deleteNotification(notification.id)"></i>
+              </div>
+            </div>
+            <div nz-row>
+              <div nz-col>
+                id: {{notification.id}}
+              </div>
+            </div>
+            <div nz-row>
+              <div nz-col>
+                senderId: {{notification.senderId}}
+              </div>
+            </div>
+            <div nz-row>
+              <div nz-col>
+                recipientId: {{notification.recipiendId}}
+              </div>
+            </div>
+            <div nz-row>
+              <div nz-col>
+                message: {{notification.message}}
+              </div>
+            </div>
+            <div nz-row>
+              <div nz-col>
+                creationDate: {{notification.creationDate}}
+              </div>
+            </div>
+            <div nz-row>
+              <div nz-col>
+                readDate: {{notification.readDate}}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </ng-container>
+</nz-drawer>
+<!--/notifications drawer-->
