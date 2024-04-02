@@ -42,6 +42,7 @@ services:
       - Serilog__WriteTo__2__Args__tableName=Logs
       - Serilog__WriteTo__2__Args__AutoCreateSqlTable=True     
       - ConnectionStrings__AuthDB_SQLServer=Server=angular17_net8_sqlserver;Database=AuthDB;User id=sa;Password=Password01!;TrustServerCertificate=True;
+      - ConnectionStrings__DbContext_SQLServer=Server=angular17_net8_sqlserver;Database=AuthDB;User id=sa;Password=Password01!;TrustServerCertificate=True;
     links:
       - angular17_net8_sqlserver
 
