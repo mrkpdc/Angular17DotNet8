@@ -5,7 +5,7 @@ VisualStudioVersion = 17.8.34330.188
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "var", "var\", "{259DFCC4-9EAA-4994-922F-94C8C8DCE599}"
 	ProjectSection(WebsiteProperties) = preProject
-		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.8.1"
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.8"
 		Debug.AspNetCompiler.VirtualPath = "/localhost_50705"
 		Debug.AspNetCompiler.PhysicalPath = "var\"
 		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_50705\"
@@ -28,7 +28,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "be", "be\be.csproj", "{41A7
 EndProject
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "fe", "fe\", "{BC4C86C0-AFEA-4375-BAC9-3263654D283E}"
 	ProjectSection(WebsiteProperties) = preProject
-		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.8.1"
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.8"
 		Debug.AspNetCompiler.VirtualPath = "/localhost_50703"
 		Debug.AspNetCompiler.PhysicalPath = "fe\"
 		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_50703\"
